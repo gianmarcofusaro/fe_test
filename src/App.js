@@ -38,6 +38,7 @@ function App() {
       <div className="App">
         <div>Fetching: {JSON.stringify(data.isFetching)}</div>
         <DataTable cols={week} rows={data.entries} />
+        <p>CLICK ON CELL TO SHOW THE LIST OF CLIENTS</p>
     </div>
     );
 
