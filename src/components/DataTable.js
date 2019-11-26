@@ -3,7 +3,7 @@ import DataTableCell from './DataTableCell';
 import DataTableRow from './DataTableRow';
 import { photoshootsRowComposer } from '../helpers/rowComposer';
 import { DaysTypes } from '../enums/mapDayToNumber';
-
+import '../App.css';
 export default class DataTable extends React.Component {
   
   constructor(props) {
@@ -51,10 +51,23 @@ export default class DataTable extends React.Component {
         }
         const testExpr = item.day_of_the_week;
         photoshootsRowComposer(testExpr, row)
-        this.setState({ table: table })
       })
+      // footer
+      row = Array(8).fill(0)
+      const body = [...table]
+      body.shift();
+      body.map((item, index) => {
+        item.map((el, i) => {
+          i === 0 ? row[0] = 'Total' : row[i] = row[i] + el
+        })
+      })
+      table.push(row)      
+
+      console.log(row)
+      this.setState({ table: table })
     }
   }
+
 
   _onTableCompose = () => {
     const table = this.state.table;
