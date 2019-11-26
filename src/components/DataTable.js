@@ -73,6 +73,8 @@ export default class DataTable extends React.Component {
 
 
   //TODO: ...progress
+  // check for duplicates within IDArray -> if duplicates merge it and return arr = [id, counter]
+  // map the new array -> create rows -> render
   handleClick = (event) => {
     const dayOfWeek = event.target.attributes.getNamedItem('data-day').value;
     const rows = this.props.rows;
@@ -87,7 +89,6 @@ export default class DataTable extends React.Component {
     // const count = idArr.map((id) => {     
     //   return rows.filter((item) => item.client_id === id).length;
     // })
-
     alert(JSON.stringify(idArr))
   }
 

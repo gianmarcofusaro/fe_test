@@ -7,7 +7,6 @@ import { PHOTOSHOOT_DAILY } from './api';
 function App() {
   const [data, setData] = useState({entries: [], isFetching: false});
 
-  // weak should be enum
   const week = [
     '',
     'MONDAY',
