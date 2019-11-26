@@ -1,9 +1,9 @@
-import * as React from 'react';
+import React from 'react';
+import '../App.css';
+import { DaysTypes } from '../enums/mapDayToNumber';
+import { photoshootsRowComposer } from '../helpers/rowComposer';
 import DataTableCell from './DataTableCell';
 import DataTableRow from './DataTableRow';
-import { photoshootsRowComposer } from '../helpers/rowComposer';
-import { DaysTypes } from '../enums/mapDayToNumber';
-import '../App.css';
 export default class DataTable extends React.Component {
   
   constructor(props) {

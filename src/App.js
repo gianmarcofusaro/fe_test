@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import { PHOTOSHOOT_DAILY } from './api';
 import './App.css';
 import DataTable from './components/DataTable';
-import { PHOTOSHOOT_DAILY } from './api';
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
     const fetchEntries = async () => {
       try {
         setData({ entries: data.entries, isFetching: true });
-        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 100}})
+        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
         setData({ entries: response.data, isFetching: false });
       } catch (e) {
         console.log(e);
@@ -38,7 +38,7 @@ function App() {
       <div className="App">
         <div>Fetching: {JSON.stringify(data.isFetching)}</div>
         <DataTable cols={week} rows={data.entries} />
-        <p>CLICK ON CELL TO SHOW THE LIST OF CLIENTS</p>
+        <p>CLICK ON CELLS TO SHOW THE LIST OF CLIENTS</p>
     </div>
     );
 
