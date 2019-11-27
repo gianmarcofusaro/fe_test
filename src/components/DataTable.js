@@ -4,31 +4,32 @@ import { DaysTypes } from '../enums/mapDayToNumber';
 import { photoshootsRowComposer } from '../helpers/rowComposer';
 import DataTableCell from './DataTableCell';
 import DataTableRow from './DataTableRow';
+import './TableStyles.css';
 export default class DataTable extends React.Component {
   
   constructor(props) {
     super(props)
 
     this.state = { 
-      table: [],
       rows: this.props.rows,
       cols: this.props.cols,
-      detail: []
+      table: [],
+      detailTable: [],
     };
   }
 
   componentDidUpdate(prevProps) {
     if (prevProps.rows !== this.props.rows) {
       const rows = this.props.rows;
-      this._onRowsCreate(rows);
+      this._onPshootRowsCreate(rows);
     }
   } 
 
   componentWillMount() {
-    this._onColsCreate();
+    this._onPshootColsCreate();
   }
 
-  _onColsCreate = () => {
+  _onPshootColsCreate = () => {
     const cols = this.state.cols;
     const table = this.state.table;
     
@@ -36,7 +37,7 @@ export default class DataTable extends React.Component {
     this.setState({ table: table })
   }
 
-  _onRowsCreate = (rows) => {
+  _onPshootRowsCreate = (rows) => {
     if(rows) {
       const table = this.state.table;
       let auxTypesArr = [];
@@ -68,52 +69,109 @@ export default class DataTable extends React.Component {
     }
   }
 
+  _onDetailTableCreate = (event) => {
+    const dayOfWeek = event.target.attributes.getNamedItem('data-day').value;
+    const rows = this.props.rows;
+    const table = []
+    let row = []
 
-  _onTableCompose = () => {
+
+    // TODO: must check for duplicates clients
+    rows.map((item, i) => {
+      if (item.day_of_the_week === DaysTypes[dayOfWeek]) {
+        row = Array(8).fill(0)
+        table.push(row);
+        row[0] = item.client_id;
+        row[dayOfWeek] = row[dayOfWeek] + 1;
+      }
+    })
+
+    this.setState({ detailTable: table })
+  }
+
+  _onPshootTheadCompose = () => {
     const table = this.state.table;
+    const arr = [...table];
+    const tHeadArr = arr.shift()
+
+    if (tHeadArr) {
+      return (
+        <thead>
+          <DataTableRow key={'thead'} header={true} footer={false}>
+            {tHeadArr.map((v, i) => (
+              <DataTableCell key={i} content={v} day={i} />
+            ))}
+          </DataTableRow>
+        </thead>
+      )
+    }
+  }
+
+  _onPshootTBodyCompose = () => {
+    const table = this.state.table;
+    let  tBodyArr = [...table];
+    tBodyArr = tBodyArr.slice(1, -1);
+
+      return (
+        <tbody>
+          {tBodyArr.map((item, index) => (
+            <DataTableRow key={index} header={false} footer={false} clickHandler={this._onDetailTableCreate}>
+              {item.map((v, i) => (
+                <DataTableCell key={i} content={v} day={i} />
+              ))}
+            </DataTableRow>
+          ))}
+        </tbody>
+      )
+  }
+
+  _onPshootTfootCompose = () => {
+    const table = this.state.table;
+    const arr = [...table];
+    const tFootArr = arr.pop()
+
+    if (tFootArr) {
+      return (
+        <tfoot>
+          <DataTableRow key={'tFoot'} header={false} footer={true}>
+            {tFootArr.map((v, i) => (
+              <DataTableCell key={i} content={v} day={i} />
+            ))}
+          </DataTableRow>
+        </tfoot>
+      )
+    }
+  }
+
+  _onDetailTableCompose = () => {
+    const table = this.state.detailTable;
     return (
-      <React.Fragment>
+      <table className='table_detail'>
+      <tbody>
         {table.map((item, index) => (
-          <DataTableRow key={index} header={index === 0 ? true : false} clickHandler={this.handleClick}>
+          <DataTableRow key={index} header={false} footer={false}>
             {item.map((v, i) => (
               <DataTableCell key={i} content={v} day={i} />
             ))}
           </DataTableRow>
         ))}
-      </React.Fragment>
-    );
-  }
-
-
-  //TODO: ...progress
-  // check for duplicates within IDArray -> if duplicates merge it and return arr = [id, counter]
-  // map the new array -> create rows -> render
-  handleClick = (event) => {
-    const dayOfWeek = event.target.attributes.getNamedItem('data-day').value;
-    const rows = this.props.rows;
-    let idArr = []
-
-    rows.map((item) => {
-      if (item.day_of_the_week === DaysTypes[dayOfWeek]) {
-        idArr.push(item.client_id)
-      }
-    })
-
-    // const count = idArr.map((id) => {     
-    //   return rows.filter((item) => item.client_id === id).length;
-    // })
-    alert(JSON.stringify(idArr))
+      </tbody>
+      </table>
+    )
   }
 
   render() {
-    const tableBody = this._onTableCompose();
-
     return (
       <div>
-        <table className="table">
-          <tbody>{tableBody}</tbody>
+        <table className="table_photoshoot">
+          {this._onPshootTheadCompose()}
+          {this._onPshootTBodyCompose()}
+          {this._onPshootTfootCompose()}
+          
         </table>
+        {this._onDetailTableCompose()}
       </div>
+      
     );
   }
 }

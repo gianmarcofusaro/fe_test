@@ -25,6 +25,7 @@ function App() {
         setData({ entries: data.entries, isFetching: true });
         const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
         setData({ entries: response.data, isFetching: false });
+        console.log(JSON.stringify(response))
       } catch (e) {
         console.log(e);
         setData({ entries: data.entries, isFetching: false });
@@ -38,7 +39,6 @@ function App() {
       <div className="App">
         <div>Fetching: {JSON.stringify(data.isFetching)}</div>
         <DataTable cols={week} rows={data.entries} />
-        <p>CLICK ON CELLS TO SHOW THE LIST OF CLIENTS</p>
     </div>
     );
 

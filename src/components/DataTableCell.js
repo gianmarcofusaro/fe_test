@@ -7,7 +7,7 @@ export default function Cell(props) {
       {props.content}
     </td>
   ) : (
-      <td className="cell" data-day={props.day}>
+      <td className={props.content === 0 && 'empty' + '_cell'} data-day={props.day}>
         {props.content}
       </td>
     );

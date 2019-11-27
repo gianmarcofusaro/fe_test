@@ -1,0 +1,33 @@
+.table_detail {
+  background: lightblue;
+  margin-top: 30px;
+}
+
+table {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+tr {
+  display: flex;
+  flex-direction: row;
+  text-transform: capitalize;
+}
+
+td {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  min-height: 30px;
+}
+
+tbody td {
+  cursor: pointer;
+}
+
+.empty_cell {
+  color: lightslategrey;
+}
