@@ -26,7 +26,6 @@ function App() {
         const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
         setTimeout(() => { setData({ entries: response.data, isFetching: false }) }, 3000); //simulate bad connection
         // setData({ entries: response.data, isFetching: false }) //async
-        console.log(JSON.stringify(response))
       } catch (e) {
         console.log(e);
         setData({ entries: data.entries, isFetching: false });
