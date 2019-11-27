@@ -21,13 +21,10 @@ export default class DataTable extends React.Component {
   componentDidUpdate(prevProps) {
     if (prevProps.rows !== this.props.rows) {
       const rows = this.props.rows;
+      this._onPshootColsCreate();
       this._onPshootRowsCreate(rows);
     }
   } 
-
-  componentWillMount() {
-    this._onPshootColsCreate();
-  }
 
   _onPshootColsCreate = () => {
     const cols = this.state.cols;
@@ -42,30 +39,32 @@ export default class DataTable extends React.Component {
       const table = this.state.table;
       let auxTypesArr = [];
       let row = []
-
-      rows.map( (item) => {
-        if (!auxTypesArr.includes(item.type)) {
-          row = Array(8).fill(0)
-          auxTypesArr.push(item.type);
-          table.push(row)
-          row[0] = item.type;
-        }
-        const testExpr = item.day_of_the_week;
-        photoshootsRowComposer(testExpr, row)
-      })
-      // footer
-      row = Array(8).fill(0)
-      const body = [...table]
-      body.shift();
-      body.map((item, index) => {
-        item.map((el, i) => {
-          i === 0 ? row[0] = 'Total' : row[i] = row[i] + el
+      if (table.length) {
+        rows.map((item) => {
+          if (!auxTypesArr.includes(item.type)) {
+            row = Array(8).fill(0)
+            auxTypesArr.push(item.type);
+            table.push(row)
+            row[0] = item.type;
+          }
+          const testExpr = item.day_of_the_week;
+          photoshootsRowComposer(testExpr, row)
         })
-      })
-      table.push(row)      
+        // footer
+        row = Array(8).fill(0)
+        const body = [...table]
+        body.shift();
+        body.map((item, index) => {
+          item.map((el, i) => {
+            i === 0 ? row[0] = 'Total' : row[i] = row[i] + el
+          })
+        })
+        table.push(row)
 
-      console.log(row)
-      this.setState({ table: table })
+        console.log(row)
+        this.setState({ table: table })
+      }
+
     }
   }
 

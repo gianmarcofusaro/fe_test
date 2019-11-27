@@ -4,3 +4,19 @@ body {
 .App {
   text-align: center;
 }
+
+.dev_banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+}
+
+.dev_banner.ready {
+  background: lime;
+}
+
+.dev_banner.wait {
+  background: orange;
+}

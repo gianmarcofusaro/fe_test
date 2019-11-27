@@ -21,10 +21,11 @@ function App() {
 
   useEffect(() => {
     const fetchEntries = async () => {
-      try {
+      try {        
         setData({ entries: data.entries, isFetching: true });
         const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
-        setData({ entries: response.data, isFetching: false });
+        setTimeout(() => { setData({ entries: response.data, isFetching: false }) }, 3000); //simulate bad connection
+        // setData({ entries: response.data, isFetching: false }) //async
         console.log(JSON.stringify(response))
       } catch (e) {
         console.log(e);
@@ -37,8 +38,8 @@ function App() {
   
     return (
       <div className="App">
-        <div>Fetching: {JSON.stringify(data.isFetching)}</div>
         <DataTable cols={week} rows={data.entries} />
+        <div className={data.isFetching ? "dev_banner wait" : "dev_banner ready"} >Fetching: {JSON.stringify(data.isFetching)}</div>
     </div>
     );
 
