@@ -1,6 +1,7 @@
 .table_container {
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   overflow: auto;
   margin: 30px;
   padding-bottom: 15px;
@@ -8,7 +9,6 @@
 
 .table_detail {
   margin-top: 15px;
-  border: 1px solid lightgray;
 }
 
 table {
@@ -43,7 +43,7 @@ tbody td {
 td:first-child {
   position: sticky;
   left: 0;
-  background: white;
+  background: lightcyan;
 }
 
 .table_detail td:first-child {
@@ -73,6 +73,5 @@ tbody tr:nth-child(odd) {
 
   td:first-child {
     border-right: 1px solid lightgray;
-    background: lightcyan;
   }
 }

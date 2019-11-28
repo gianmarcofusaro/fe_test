@@ -1,5 +1,4 @@
 import React from 'react';
-import '../App.css';
 import { DaysTypes } from '../enums/mapDayToNumber';
 import { photoshootsRowComposer } from '../helpers/rowComposer';
 import DataTableCell from './DataTableCell';
