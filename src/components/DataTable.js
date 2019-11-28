@@ -5,6 +5,7 @@ import { photoshootsRowComposer } from '../helpers/rowComposer';
 import DataTableCell from './DataTableCell';
 import DataTableRow from './DataTableRow';
 import './TableStyles.css';
+import { keygen } from '../helpers/keyGenerator';
 export default class DataTable extends React.Component {
   
   constructor(props) {
@@ -96,7 +97,7 @@ export default class DataTable extends React.Component {
         <thead>
           <DataTableRow header={true} footer={false}>
             {tHeadArr.map((v, i) => (
-              <DataTableCell key={i} content={v} day={i} />
+              <DataTableCell key={keygen()} content={v} day={i} />
             ))}
           </DataTableRow>
         </thead>
@@ -112,9 +113,9 @@ export default class DataTable extends React.Component {
     return (
       <tbody>
         {tBodyArr.map((item, index) => (
-          <DataTableRow key={index} header={false} footer={false} clickHandler={this._onDetailTableCreate}>
+          <DataTableRow key={keygen()} header={false} footer={false} clickHandler={this._onDetailTableCreate}>
             {item.map((v, i) => (
-              <DataTableCell key={i} content={v} day={i} />
+              <DataTableCell key={keygen()} content={v} day={i} />
             ))}
           </DataTableRow>
         ))}
@@ -132,7 +133,7 @@ export default class DataTable extends React.Component {
         <tfoot>
           <DataTableRow key={'tFoot'} header={false} footer={true}>
             {tFootArr.map((v, i) => (
-              <DataTableCell key={i} content={v} day={i} />
+              <DataTableCell key={keygen()} content={v} day={i} />
             ))}
           </DataTableRow>
         </tfoot>
@@ -143,24 +144,27 @@ export default class DataTable extends React.Component {
   _onDetailTableCompose = () => {
     const table = this.state.detailTable;
 
-    return (
-      <table className='table_detail'>
-      <tbody>
-        {table.map((item, index) => (
-          <DataTableRow key={index} header={false} footer={false}>
-            {item.map((v, i) => (
-              <DataTableCell key={i} content={v} day={i} />
+    if (table.length) {
+      return (
+        <table className='table_detail'>
+          <tbody>
+            {table.map((item, index) => (
+              <DataTableRow key={index} header={false} footer={false}>
+                {item.map((v, i) => (
+                  <DataTableCell key={keygen()} content={v} day={i} />
+                ))}
+              </DataTableRow>
             ))}
-          </DataTableRow>
-        ))}
-      </tbody>
-      </table>
-    )
+          </tbody>
+        </table>
+      )
+    }
+
   }
 
   render() {
     return (
-      <div>
+      <div className="table_container">
         <table className="table_photoshoot">
           {this._onPshootTheadCompose()}
           {this._onPshootTBodyCompose()}

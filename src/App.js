@@ -24,8 +24,8 @@ function App() {
       try {        
         setData({ entries: data.entries, isFetching: true });
         const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
-        setTimeout(() => { setData({ entries: response.data, isFetching: false }) }, 3000); //simulate bad connection
-        // setData({ entries: response.data, isFetching: false }) //async
+        //setTimeout(() => { setData({ entries: response.data, isFetching: false }) }, 3000); //simulate bad connection
+        setData({ entries: response.data, isFetching: false }) //async
       } catch (e) {
         console.log(e);
         setData({ entries: data.entries, isFetching: false });
@@ -38,7 +38,7 @@ function App() {
     return (
       <div className="App">
         <DataTable cols={week} rows={data.entries} />
-        <div className={data.isFetching ? "dev_banner wait" : "dev_banner ready"} >Fetching: {JSON.stringify(data.isFetching)}</div>
+        {/* <div className={data.isFetching ? "dev_banner wait" : "dev_banner ready"} >Fetching: {JSON.stringify(data.isFetching)}</div> */}
     </div>
     );
 
