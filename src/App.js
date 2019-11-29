@@ -5,9 +5,10 @@ import DataTable from './components/DataTable';
 
 
 function App() {
-  const [data, setData] = useState({entries: [], isFetching: false});
+  const [data, setData] = useState({ entries: [], isFetching: false });
 
-  const week = [
+  // assuming fixed cols numbers
+  const weekCols = [
     '',
     'MONDAY',
     'TUESDAY',
@@ -21,27 +22,24 @@ function App() {
 
   useEffect(() => {
     const fetchEntries = async () => {
-      try {        
+      try {
         setData({ entries: data.entries, isFetching: true });
-        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20}})
-        //setTimeout(() => { setData({ entries: response.data, isFetching: false }) }, 3000); //simulate bad connection
+        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20 } })
         setData({ entries: response.data, isFetching: false }) //async
+        console.log('xxx', JSON.stringify(response.data))
       } catch (e) {
         console.log(e);
         setData({ entries: data.entries, isFetching: false });
       }
-    };  
+    };
     fetchEntries();
   }, []);
 
-  
-    return (
-      <div className="App">
-        <DataTable cols={week} rows={data.entries} />
-        {/* <div className={data.isFetching ? "dev_banner wait" : "dev_banner ready"} >Fetching: {JSON.stringify(data.isFetching)}</div> */}
+  return (
+    <div className="App">
+      <DataTable cols={weekCols} rows={data.entries} />
     </div>
-    );
-
+  );
 }
 
 export default App;
