@@ -2,19 +2,26 @@
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
-  overflow: auto;
-  margin: 30px;
   padding-bottom: 15px;
 }
 
-.table_detail {
-  margin-top: 15px;
+
+.table_photoshoot {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: white;
 }
 
 table {
   display: flex;
   flex-direction: column;
   margin: 0 auto;
+  padding: 0px 30px 15px 30px;
 }
 
 tr {
@@ -41,6 +48,10 @@ tbody td {
 }
 
 td:first-child {
+  position: -webkit-sticky;
+  position: -moz-sticky;
+  position: -ms-sticky;
+  position: -o-sticky;
   position: sticky;
   left: 0;
   background: lightcyan;

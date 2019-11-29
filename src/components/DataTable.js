@@ -80,10 +80,9 @@ export default class DataTable extends React.Component {
     // retrive the name of photo type from DOM attribute
     const photoType = event.target.parentElement.attributes.getNamedItem('data-phototype').value;
     const rows = this.props.rows;
-    const table = [];
+    let table = [];
     let typesTable = [];
     let row = [];
-
     // filter data by photoType and return the right objects
     typesTable = rows.filter(obj => {
       return obj.type === photoType
@@ -92,13 +91,12 @@ export default class DataTable extends React.Component {
     typesTable.map((item, i) => {
       const rowIndex = DaysTypes[item.day_of_the_week];
       row = Array(8).fill(0);
-      row[0] = item.client_id;
+      row[0] = `Client: ${item.client_id}`;
       row[rowIndex] = row[rowIndex] + 1;
       table.push(row);
-    })
-
-    this.setState({ detailTable: table})
-  
+    }) 
+    
+    this.setState({ detailTable: table})  
   }
 
   // create a function to compose rows and save some bit

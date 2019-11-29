@@ -24,11 +24,10 @@ function App() {
     const fetchEntries = async () => {
       try {
         setData({ entries: data.entries, isFetching: true });
-        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 20 } })
+        const response = await PHOTOSHOOT_DAILY.daily({ params: { limit: 100 } })
         setData({ entries: response.data, isFetching: false }) //async
-        console.log('xxx', JSON.stringify(response.data))
       } catch (e) {
-        console.log(e);
+        console.error(e);
         setData({ entries: data.entries, isFetching: false });
       }
     };
